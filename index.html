@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Github Issue Tracker</title>
+    <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
 
     <!-- tailwindcss + daisyui cdn -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -29,10 +30,45 @@
 
 <body>
 
-    
+    <!-- login page -->
+    <section id="login-section" class="min-h-screen flex justify-center items-center bg-base-200 mx-auto">
+        <div class="max-w-md shadow-lg rounded-lg p-8 bg-base-100 sm:w-full">
+            <div class="my-2">
+                <img src="./assets/github-logo.png" alt="" class="mx-auto">
+                <h2 class="text-2xl font-bold text-center">GitHub Issues Tracker</h2>
+                <p class="text-center text-gray-500">Sign in to manage your issues</p>
+            </div>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend text-lg">Username</legend>
+                <input id="username" type="text" class="input w-full" placeholder="Enter Username" />
+                <p class="label text-primary font-bold text-md">Default: admin</p>
+            </fieldset>
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend text-lg">Password</legend>
+                <input id="password" type="password" class="input w-full" placeholder="Enter Password" />
+                <p class="label text-primary font-bold text-md">Default: admin123</p>
+            </fieldset>
+
+            <button id="login-button" class="btn btn-primary w-full mt-3">Sign In</button>
+
+            <div class="my-4 grid grid-cols-5 items-center">
+                <hr class="text-gray-300 col-span-2">
+                <p class="text-center col-span-1">OR</p>
+                <hr class="text-gray-300 col-span-2">
+            </div>
+
+            <p class="text-center mt-2 text-sm text-gray-500">Demo Credentials:</p>
+            <div class="bg-sky-100 text-center p-4">
+                <p class="text-sm"><span class="font-bold">Username:</span> admin</p>
+                <p class="text-sm"><span class="font-bold">Password:</span> admin123</p>
+            </div>
+        </div>
+
+    </section>
 
 
-
+    <script src="./script/login.js"></script>
     <script src="./script/script.js"></script>
 </body>
 
