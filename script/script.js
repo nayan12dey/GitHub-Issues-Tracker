@@ -30,6 +30,51 @@ console.log(allTrack.innerText);
 allTrackCount = 0;
 
 
+// Function for labels 
+let createLabels = (labels) =>{
+    console.log(labels);
+    if(labels.length == 0){
+        return;
+    }
+
+    const labelStyle = labels.map(label => {
+        let badgeClass = "";
+        let badgeIcon = "";
+
+        switch(label.toLowerCase()){
+            case "bug":
+                badgeIcon = "<i class='fa-solid fa-bug'></i>"
+                badgeClass = "badge-error text-red-500 border-2 border-red-400"
+                break;
+            case "help wanted":
+                badgeIcon = "<i class='fa-solid fa-circle'></i>"
+                badgeClass = "badge-warning text-yellow-700 border-2 border-yellow-400"
+                break;
+            case "enhancement":
+                badgeIcon = "<i class='fa-solid fa-circle'></i>"
+                badgeClass = "badge-success text-green-600 border-2 border-green-400"
+                break;
+            case "documentation":
+                badgeIcon = "<i class='fa-solid fa-file'></i>"
+                badgeClass = "badge-accent text-blue-600 border-2 border-blue-400"
+                break;
+            case "good first issue":
+                badgeClass = "badge-primary border-2 border-[#422AD5]"
+                break;
+            default:
+                badgeClass = "badge-neutral"   
+        }
+
+        return `<div class="badge badge-soft ${badgeClass} font-semibold">${badgeIcon}${label.toUpperCase()}</div>`;
+    })
+
+    return labelStyle.join(" ")
+}
+
+
+
+
+
 
 // Feature 3: create Card dynamically
 
@@ -79,10 +124,11 @@ const displayCard = (data) => {
         // 2-3 handle image icon for open and closed card
         const statusImg = data.status == "open" ? "Open-Status.png" : "Closed-Status.png";
 
+
         div.innerHTML = `
         <div class="p-5">
                     <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 ${borderTopColor}">
-                        <div class="card-body p-5">
+                        <div class="card-body">
                             <div class="flex justify-between items-center">
                                 <img src="./assets/${statusImg}" alt="" class="w-6" id="open">
                                 <div class="badge badge-soft ${priorityClass} ${priorityTextColor} font-semibold text-sm">${data.priority.toUpperCase()}</div>
@@ -90,12 +136,11 @@ const displayCard = (data) => {
 
                             <div>
                                 <h2 class="font-bold text-lg">${data.title}</h2>
-                                <p class="text-gray-500 text-sm line-clamp-3">${data.description}</p>
+                                <p class="text-gray-500 text-sm line-clamp-2">${data.description}</p>
                             </div>
 
-                            <div class="">
-                                ${data.labels[0] ? `<div class="badge badge-soft badge-error text-red-500 border-2 border-red-400 font-semibold">${data.labels[0]}</div>` : ""}
-                                ${data.labels[1] ? `<div class="badge badge-soft badge-warning border-2 border-yellow-400 text-yellow-700 font-semibold">${data.labels[1]}</div>` : ""}
+                            <div class="flex flex-wrap gap-2">
+                                ${createLabels(data.labels)}
                             </div>
 
                             <div class="border-t border-gray-300 p-4">
@@ -116,4 +161,6 @@ const displayCard = (data) => {
     })
 
 }
+
+
 
