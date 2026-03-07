@@ -75,6 +75,7 @@ let createLabels = (labels) => {
 const displayCardDetais = (data) => {
     console.log(data);
 
+
     const cardDetailsContainer = document.getElementById("card-details-container");
     console.log(cardDetailsContainer)
 
@@ -123,6 +124,7 @@ const displayCardDetais = (data) => {
                 </div>
     
     `
+
     document.getElementById("card_details_modal").showModal();
 
 
@@ -131,17 +133,33 @@ const displayCardDetais = (data) => {
 
 
 
+/* loader spinner  */
+
+const loadingSpinner = document.getElementById("spinner");
+
+// show loader spinner
+const showSpinner = () => {
+    loadingSpinner.classList.remove("hidden");
+}
+
+// hide loader spinner
+const hideSpinner = () => {
+    loadingSpinner.classList.add("hidden");
+}
+
 
 
 // Feature 3: create Card dynamically
 let allCards = []
 
 const loadCard = () => {
+    showSpinner();
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(response => response.json())
         .then(data => {
             allCards = data.data;
-            displayCard(data.data)
+            displayCard(data.data);
+            hideSpinner();
         })
 }
 
@@ -149,6 +167,7 @@ loadCard();
 
 const displayCard = (data) => {
     console.log(data);
+    hideSpinner();
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
@@ -214,6 +233,7 @@ const displayCard = (data) => {
         
         `
 
+
         // 3. append to the card container
         cardContainer.append(div);
 
@@ -235,6 +255,7 @@ const issuesCount = document.getElementById("issues-no");
 
 // All cards show function
 const showAllCard = () => {
+     showSpinner();
     let allCardsIssues = allCards.length;
     issuesCount.innerText = allCardsIssues;
     displayCard(allCards)
@@ -242,6 +263,7 @@ const showAllCard = () => {
 
 // Open Cards Show function
 const showOpenCard = () => {
+    showSpinner();
     let openCardsIssues = allCards.filter(card => card.status.toLowerCase() == "open").length;
     issuesCount.innerText = openCardsIssues;
 
@@ -250,6 +272,7 @@ const showOpenCard = () => {
 
 // Closed Cards Show function
 const showClosedCard = () =>{
+    showSpinner();
     let closedCardIssues = allCards.filter(card => card.status.toLowerCase() == "closed").length;
     issuesCount.innerText = closedCardIssues;
     displayCard(allCards.filter(card => card.status.toLowerCase() == "closed"))
