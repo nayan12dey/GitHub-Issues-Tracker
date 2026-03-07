@@ -31,11 +31,6 @@ allTrackCount = 0;
 
 
 
-
-
-
-
-
 // Feature 3: create Card dynamically
 
 const loadCard = () => {
@@ -60,9 +55,14 @@ const displayCard = (data) => {
         const div = document.createElement("div");
 
         // 2. add innnerHTML inside div
+
+        // 2-1. handle border top color on status
+        const borderTopColor = data.status == "open" ?  "border-t-green-500" : "border-t-purple-500"
+
+
         div.innerHTML = `
         <div class="p-5">
-                    <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 border-t-green-500">
+                    <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 ${borderTopColor}">
                         <div class="card-body p-5">
                             <div class="flex justify-between items-center">
                                 <img src="./assets/Open-Status.png" alt="" class="w-6" id="open">
