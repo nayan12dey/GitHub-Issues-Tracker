@@ -119,6 +119,44 @@
             </section>
         </section>
 
+
+
+
+        <!-- card details modal -->
+        <!-- Open the modal using ID.showModal() method -->
+        <dialog id="card_details_modal" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+                <h2 class="text-2xl font-bold mb-2">Fix broken image uploads</h2>
+                <ul class="flex items-center gap-5">
+                    <div class="badge badge-success rounded-full text-white">Success</div>
+                    <li class="text-sm text-gray-500 list-disc">Opened by Fahim Ahmed</li>
+                    <li class="text-sm text-gray-500 list-disc">22/02/2026</li>
+                </ul>
+                <div class="flex items-center mt-4 mb-4 gap-4">
+                    <div class="badge badge-soft badge-error rounded-full border-2 border-red-500 font-bold text-red-500">BUG</div>
+                    <div class="badge badge-soft badge-warning rounded-full border-2 border-yellow-600 text-yellow-700 font-bold">HELP WANTED</div>
+                </div>
+                <p class="text-sm text-gray-500 mb-4">The navigation menu doesn't collapse properly on mobile devices. Need
+                    to fix the responsive behavior.</p>
+                <div class="grid grid-cols-2 p-4 bg-sky-100 rounded-2xl">
+                    <div class="">
+                        <p>Assignee:</p>
+                        <p class="font-bold">Fahim Ahmed</p>
+                    </div>
+                    <div class="">
+                        <p>Priority:</p>
+                        <div class="badge badge-error rounded-full">Error</div>
+                    </div>
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn btn-primary">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+
     </main>
 
 
