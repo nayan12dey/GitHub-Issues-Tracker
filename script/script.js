@@ -59,14 +59,33 @@ const displayCard = (data) => {
         // 2-1. handle border top color on status
         const borderTopColor = data.status == "open" ?  "border-t-green-500" : "border-t-purple-500"
 
+        // 2-2 handle priority badge color 
+        let priorityClass = "";
+        let priorityTextColor = "";
+
+        if(data.priority.toLowerCase() == "high"){
+            priorityClass = "badge-error";
+            priorityTextColor = "text-red-500";
+        }
+        else if(data.priority.toLowerCase() == "medium"){
+            priorityClass = "badge-warning"
+            priorityTextColor = "text-yellow-700"
+        }
+        else if(data.priority.toLowerCase() == "low"){
+            priorityClass = "badge-neutral"
+            priorityTextColor = "text-gray-500"
+        }
+
+        // 2-3 handle image icon for open and closed card
+        const statusImg = data.status == "open" ? "Open-Status.png" : "Closed-Status.png";
 
         div.innerHTML = `
         <div class="p-5">
                     <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 ${borderTopColor}">
                         <div class="card-body p-5">
                             <div class="flex justify-between items-center">
-                                <img src="./assets/Open-Status.png" alt="" class="w-6" id="open">
-                                <div class="badge badge-soft badge-error text-red-500 font-semibold text-sm">${data.priority}</div>
+                                <img src="./assets/${statusImg}" alt="" class="w-6" id="open">
+                                <div class="badge badge-soft ${priorityClass} ${priorityTextColor} font-semibold text-sm">${data.priority.toUpperCase()}</div>
                             </div>
 
                             <div>
