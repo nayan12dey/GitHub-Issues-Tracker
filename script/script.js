@@ -23,11 +23,7 @@ filterButtons.forEach(btn => {
 })
 
 
-// Feature 2: handle card tracker section
-const allTrack = document.getElementById("allTrack");
-// console.log(allTrack.innerText);
 
-allTrackCount = 0;
 
 
 // Function for labels 
@@ -72,7 +68,10 @@ let createLabels = (labels) => {
 }
 
 
-// Display card details in Modal
+
+
+// Feature 4: displayCardDetails in Modal
+
 const displayCardDetais = (data) => {
     console.log(data);
 
@@ -135,11 +134,15 @@ const displayCardDetais = (data) => {
 
 
 // Feature 3: create Card dynamically
+let allCards = []
 
 const loadCard = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then(response => response.json())
-        .then(data => displayCard(data.data))
+        .then(data => {
+            allCards = data.data;
+            displayCard(data.data)
+        })
 }
 
 loadCard();
@@ -151,8 +154,6 @@ const displayCard = (data) => {
 
     data.forEach(data => {
         // console.log(data)
-        allTrackCount++;
-        // console.log(allTrackCount)
 
         // 1. create element/ div
         const div = document.createElement("div");
@@ -213,11 +214,8 @@ const displayCard = (data) => {
         
         `
 
-        cardContainer.append(div);
         // 3. append to the card container
         cardContainer.append(div);
-
-        allTrack.innerText = allTrackCount;
 
 
         // 4. Added event listener for everycard
@@ -230,8 +228,30 @@ const displayCard = (data) => {
 }
 
 
+/* Tracking Issue Number for All sections */
 
+// track issue no for open card
+const issuesCount = document.getElementById("issues-no");
 
-// Feature 4: loadCardDetails and displayCardDetails
+// All cards show function
+const showAllCard = () => {
+    let allCardsIssues = allCards.length;
+    issuesCount.innerText = allCardsIssues;
+    displayCard(allCards)
+}
 
+// Open Cards Show function
+const showOpenCard = () => {
+    let openCardsIssues = allCards.filter(card => card.status.toLowerCase() == "open").length;
+    issuesCount.innerText = openCardsIssues;
+
+    displayCard(allCards.filter(card => card.status.toLowerCase() == "open"));
+}
+
+// Closed Cards Show function
+const showClosedCard = () =>{
+    let closedCardIssues = allCards.filter(card => card.status.toLowerCase() == "closed").length;
+    issuesCount.innerText = closedCardIssues;
+    displayCard(allCards.filter(card => card.status.toLowerCase() == "closed"))
+}
 
