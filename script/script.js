@@ -23,8 +23,20 @@ filterButtons.forEach(btn => {
 })
 
 
+// Feature 2: handle card tracker section
+const allTrack = document.getElementById("allTrack");
+console.log(allTrack.innerText);
 
-// Feature 2: create Card dynamically
+allTrackCount = 0;
+
+
+
+
+
+
+
+
+// Feature 3: create Card dynamically
 
 const loadCard = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -35,37 +47,36 @@ const loadCard = () => {
 loadCard();
 
 const displayCard = (data) => {
-    console.log(data);
+    // console.log(data);
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
     data.forEach(data => {
-        console.log(data)
+        // console.log(data)
+        allTrackCount++;
+        console.log(allTrackCount)
+
         // 1. create element/ div
         const div = document.createElement("div");
 
         // 2. add innnerHTML inside div
         div.innerHTML = `
         <div class="p-5">
-                    <div class="card w-[280px] bg-base-100 shadow-lg border-t-4 border-t-green-500 h-full">
-                        <div class="card-body space-y-4">
-                            <div class="flex justify-between">
-                                <img src="./assets/${data.status}-Status.png" alt="" class="w-6">
-                                <div class="badge badge-soft badge-error text-red-500 font-semibold">${data.priority}</div>
+                    <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 border-t-green-500">
+                        <div class="card-body p-5">
+                            <div class="flex justify-between items-center">
+                                <img src="./assets/Open-Status.png" alt="" class="w-6" id="open">
+                                <div class="badge badge-soft badge-error text-red-500 font-semibold text-sm">${data.priority}</div>
                             </div>
 
                             <div>
                                 <h2 class="font-bold text-lg">${data.title}</h2>
-                                <p class="text-gray-500">${data.description}</p>
+                                <p class="text-gray-500 text-sm line-clamp-3">${data.description}</p>
                             </div>
 
-                            <div>
-                                <div
-                                    class="badge badge-soft badge-error text-red-500 border-2 border-red-400 font-semibold">
-                                    ${data.labels[0]}</div>
-                                <div
-                                    class="badge badge-soft badge-warning border-2 border-yellow-400 text-yellow-700 font-semibold">
-                                    ${data.labels[1]}</div>
+                            <div class="">
+                                ${data.labels[0] ? `<div class="badge badge-soft badge-error text-red-500 border-2 border-red-400 font-semibold">${data.labels[0]}</div>` : ""}
+                                ${data.labels[1] ? `<div class="badge badge-soft badge-warning border-2 border-yellow-400 text-yellow-700 font-semibold">${data.labels[1]}</div>` : ""}
                             </div>
 
                             <div class="border-t border-gray-300 p-4">
@@ -81,8 +92,9 @@ const displayCard = (data) => {
         `
 
         cardContainer.append(div);
+    
+        allTrack.innerText = allTrackCount;
     })
 
 }
 
-displayCard()
