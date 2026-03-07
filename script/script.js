@@ -25,15 +25,15 @@ filterButtons.forEach(btn => {
 
 // Feature 2: handle card tracker section
 const allTrack = document.getElementById("allTrack");
-console.log(allTrack.innerText);
+// console.log(allTrack.innerText);
 
 allTrackCount = 0;
 
 
 // Function for labels 
-let createLabels = (labels) =>{
-    console.log(labels);
-    if(labels.length == 0){
+let createLabels = (labels) => {
+    // console.log(labels);
+    if (labels.length == 0) {
         return;
     }
 
@@ -41,7 +41,7 @@ let createLabels = (labels) =>{
         let badgeClass = "";
         let badgeIcon = "";
 
-        switch(label.toLowerCase()){
+        switch (label.toLowerCase()) {
             case "bug":
                 badgeIcon = "<i class='fa-solid fa-bug'></i>"
                 badgeClass = "badge-error text-red-500 border-2 border-red-400"
@@ -62,7 +62,7 @@ let createLabels = (labels) =>{
                 badgeClass = "badge-primary border-2 border-[#422AD5]"
                 break;
             default:
-                badgeClass = "badge-neutral"   
+                badgeClass = "badge-neutral"
         }
 
         return `<div class="badge badge-soft ${badgeClass} font-semibold">${badgeIcon}${label.toUpperCase()}</div>`;
@@ -71,6 +71,64 @@ let createLabels = (labels) =>{
     return labelStyle.join(" ")
 }
 
+
+// Display card details in Modal
+const displayCardDetais = (data) => {
+    console.log(data);
+
+    const cardDetailsContainer = document.getElementById("card-details-container");
+    console.log(cardDetailsContainer)
+
+
+    // 2. add innerHTML inside div
+
+
+    // 2-1 handle priority badge color in Modal
+    let priorityClass = "";
+    let priorityTextColor = "";
+
+    if (data.priority.toLowerCase() == "high") {
+        priorityClass = "badge-error";
+        priorityTextColor = "text-red-500";
+    }
+    else if (data.priority.toLowerCase() == "medium") {
+        priorityClass = "badge-warning"
+        priorityTextColor = "text-yellow-700"
+    }
+    else if (data.priority.toLowerCase() == "low") {
+        priorityClass = "badge-neutral"
+        priorityTextColor = "text-gray-500"
+    }
+
+
+    cardDetailsContainer.innerHTML = `
+     <h2 class="text-2xl font-bold mb-2">${data.title}</h2>
+                <ul class="flex items-center gap-5">
+                    <div class="badge badge-success rounded-full text-white">Opened</div>
+                    <li class="text-sm text-gray-500 list-disc">Opened by ${data.assignee ? data.assignee : "Unknown"}</li>
+                    <li class="text-sm text-gray-500 list-disc">${new Date(data.createdAt).toLocaleDateString()}</li>
+                </ul>
+                <div class="flex items-center mt-4 mb-4 gap-4">
+                    ${createLabels(data.labels)}
+                </div>
+                <p class="text-sm text-gray-500 mb-4">${data.description}</p>
+                <div class="grid grid-cols-2 p-4 bg-sky-50 rounded-2xl">
+                    <div class="">
+                        <p>Assignee:</p>
+                        <p class="font-bold">${data.assignee ? data.assignee : "Unknown"}</p>
+                    </div>
+                    <div class="">
+                        <p>Priority:</p>
+                        <div class="badge badge-soft ${priorityClass} ${priorityTextColor} rounded-full font-bold text-sm">${data.priority.toUpperCase()}</div>
+                    </div>
+                </div>
+    
+    `
+    document.getElementById("card_details_modal").showModal();
+
+
+
+}
 
 
 
@@ -87,14 +145,14 @@ const loadCard = () => {
 loadCard();
 
 const displayCard = (data) => {
-    // console.log(data);
+    console.log(data);
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
     data.forEach(data => {
         // console.log(data)
         allTrackCount++;
-        console.log(allTrackCount)
+        // console.log(allTrackCount)
 
         // 1. create element/ div
         const div = document.createElement("div");
@@ -102,21 +160,21 @@ const displayCard = (data) => {
         // 2. add innnerHTML inside div
 
         // 2-1. handle border top color on status
-        const borderTopColor = data.status == "open" ?  "border-t-green-500" : "border-t-purple-500"
+        const borderTopColor = data.status == "open" ? "border-t-green-500" : "border-t-purple-500"
 
         // 2-2 handle priority badge color 
         let priorityClass = "";
         let priorityTextColor = "";
 
-        if(data.priority.toLowerCase() == "high"){
+        if (data.priority.toLowerCase() == "high") {
             priorityClass = "badge-error";
             priorityTextColor = "text-red-500";
         }
-        else if(data.priority.toLowerCase() == "medium"){
+        else if (data.priority.toLowerCase() == "medium") {
             priorityClass = "badge-warning"
             priorityTextColor = "text-yellow-700"
         }
-        else if(data.priority.toLowerCase() == "low"){
+        else if (data.priority.toLowerCase() == "low") {
             priorityClass = "badge-neutral"
             priorityTextColor = "text-gray-500"
         }
@@ -156,11 +214,24 @@ const displayCard = (data) => {
         `
 
         cardContainer.append(div);
-    
+        // 3. append to the card container
+        cardContainer.append(div);
+
         allTrack.innerText = allTrackCount;
+
+
+        // 4. Added event listener for everycard
+        div.querySelector(".card").addEventListener("click", () => {
+            displayCardDetais(data);
+        })
+
     })
 
 }
 
+
+
+
+// Feature 4: loadCardDetails and displayCardDetails
 
 
