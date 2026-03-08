@@ -1,5 +1,6 @@
 // console.log("hello")
 
+// current page 
 let currentPage = "all";
 
 // Feature 1: toggle b/w filter buttons
@@ -288,13 +289,14 @@ const showClosedCard = () => {
 const searchInput = document.getElementById("search-input");
 // console.log(searchInput);
 
-
+/* No Data found */
+const noIssueFound = document.getElementById("no-issue-found");
 
 const showSearchCards = async () => {
     const searchValue = searchInput.value.trim();
     console.log(searchValue);
     if(searchValue == ""){
-        alert("Please search something");
+        alert("Please type something in the search box before searching.");
         return;
     }
 
@@ -308,10 +310,30 @@ const showSearchCards = async () => {
         let filterData = currentData.filter(data => data.status.toLowerCase() == currentPage);
         // console.log(data.data);
         issuesCount.innerText = filterData.length;
-        displayCard(filterData);
+        // displayCard(filterData);
+
+
+        if(filterData.length === 0){
+            noIssueFound.classList.remove("hidden");
+            displayCard(filterData);
+        }
+        else{
+            noIssueFound.classList.add("hidden");
+            displayCard(filterData);
+        }
+    
     }
     else{
         issuesCount.innerText = currentData.length;
-        displayCard(currentData);
+        // displayCard(currentData);
+
+        if(currentData.length === 0){
+            noIssueFound.classList.remove("hidden");
+            displayCard(currentData);
+        }
+        else{
+            noIssueFound.classList.add("hidden");
+            displayCard(currentData);
+        }
     }
 }

@@ -66,7 +66,7 @@
 
 
 
-        
+
 
         <!-- card section -->
         <section class="shadow-md">
@@ -88,19 +88,25 @@
             </section>
 
             <!-- loading spinner -->
-            <div id="spinner" class="flex justify-center items-center py-20"><span class="loading loading-spinner loading-xl text-purple-600"></span></div>
+            <div id="spinner" class="flex justify-center items-center py-20"><span
+                    class="loading loading-spinner loading-xl text-purple-600"></span></div>
 
             <!-- card container section -->
             <section id="card-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-auto">
-                
+
             </section>
         </section>
 
 
         <!-- No Issue Found section -->
-         <div>
-            <i class="fa-solid fa-triangle-exclamation"></i>
-         </div>
+        <div id="no-issue-found"
+            class="flex flex-col justify-center items-center  bg-gray-800 p-10 rounded-xl shadow-md text-center mt-4 hidden">
+            <i class="fa-solid fa-triangle-exclamation text-yellow-400 text-9xl mb-6"></i>
+            <h3 class="font-extrabold text-5xl text-white mb-2">No Data Found</h3>
+            <p class="text-gray-400 text-lg max-w-md">
+                Sorry, we couldn’t find any data to display here. Try adjusting your filters or check back later.
+            </p>
+        </div>
 
 
 
@@ -111,7 +117,7 @@
         <dialog id="card_details_modal" class="modal modal-bottom sm:modal-middle">
             <div class="modal-box">
                 <div id="card-details-container"></div>
-                
+
                 <div class="modal-action">
                     <form method="dialog">
                         <!-- if there is a button in form, it will close the modal -->
