@@ -1,5 +1,7 @@
 // console.log("hello")
 
+let currentPage = "all";
+
 // Feature 1: toggle b/w filter buttons
 let filterButtons = document.querySelectorAll("#filter-button .btn");
 console.log(filterButtons);
@@ -105,7 +107,7 @@ const displayCardDetais = (data) => {
      <h2 class="text-2xl font-bold mb-2">${data.title}</h2>
                 <ul class="flex items-center gap-5">
                     <div class="badge badge-success rounded-full text-white">Opened</div>
-                    <li class="text-sm text-gray-500 list-disc">Opened by ${data.assignee ? data.assignee : "Unknown"}</li>
+                    <li class="text-sm text-gray-500 list-disc">Opened by ${data.assignee ? data.assignee : "Anonymous"}</li>
                     <li class="text-sm text-gray-500 list-disc">${new Date(data.createdAt).toLocaleDateString()}</li>
                 </ul>
                 <div class="flex items-center mt-4 mb-4 gap-4">
@@ -115,7 +117,7 @@ const displayCardDetais = (data) => {
                 <div class="grid grid-cols-2 p-4 bg-sky-50 rounded-2xl">
                     <div class="">
                         <p>Assignee:</p>
-                        <p class="font-bold">${data.assignee ? data.assignee : "Unknown"}</p>
+                        <p class="font-bold">${data.assignee ? data.assignee : "Anonymous"}</p>
                     </div>
                     <div class="">
                         <p>Priority:</p>
@@ -166,7 +168,7 @@ const loadCard = () => {
 loadCard();
 
 const displayCard = (data) => {
-    console.log(data);
+    // console.log(data);
     hideSpinner();
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
@@ -250,13 +252,14 @@ const displayCard = (data) => {
 
 /* Tracking Issue Number for All sections */
 
-// track issue no for open card
+// track issue number for all 3 filter cards
 const issuesCount = document.getElementById("issues-no");
 
 // All cards show function
 const showAllCard = () => {
-     showSpinner();
+    showSpinner();
     let allCardsIssues = allCards.length;
+    currentPage = "all";
     issuesCount.innerText = allCardsIssues;
     displayCard(allCards)
 }
@@ -266,15 +269,49 @@ const showOpenCard = () => {
     showSpinner();
     let openCardsIssues = allCards.filter(card => card.status.toLowerCase() == "open").length;
     issuesCount.innerText = openCardsIssues;
-
+    currentPage = "open"
     displayCard(allCards.filter(card => card.status.toLowerCase() == "open"));
 }
 
 // Closed Cards Show function
-const showClosedCard = () =>{
+const showClosedCard = () => {
     showSpinner();
     let closedCardIssues = allCards.filter(card => card.status.toLowerCase() == "closed").length;
     issuesCount.innerText = closedCardIssues;
+    currentPage = "closed"
     displayCard(allCards.filter(card => card.status.toLowerCase() == "closed"))
 }
 
+
+/* Search issues  */
+
+const searchInput = document.getElementById("search-input");
+// console.log(searchInput);
+
+
+
+const showSearchCards = async () => {
+    const searchValue = searchInput.value.trim();
+    console.log(searchValue);
+    if(searchValue == ""){
+        alert("Please search something");
+        return;
+    }
+
+    const response = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`);
+    const data = await response.json();
+    let searchValueIssues = data.data.length;
+    issuesCount.innerText = searchValueIssues;
+    let currentData = data.data;
+    console.log(currentData);
+    if (currentPage !== "all") {
+        let filterData = currentData.filter(data => data.status.toLowerCase() == currentPage);
+        // console.log(data.data);
+        issuesCount.innerText = filterData.length;
+        displayCard(filterData);
+    }
+    else{
+        issuesCount.innerText = currentData.length;
+        displayCard(currentData);
+    }
+}
