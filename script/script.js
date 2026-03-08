@@ -208,7 +208,7 @@ const displayCard = (data) => {
 
         div.innerHTML = `
         <div class="p-5">
-                    <div class="card h-80 w-75 bg-base-100 shadow-lg border-t-4 ${borderTopColor}">
+                    <div class="card h-80 w-full bg-base-100 shadow-lg border-t-4 ${borderTopColor}">
                         <div class="card-body">
                             <div class="flex justify-between items-center">
                                 <img src="./assets/${statusImg}" alt="" class="w-6" id="open">
